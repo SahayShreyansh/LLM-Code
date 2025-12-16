@@ -17,7 +17,6 @@ llm =ChatOpenAI(model ="gpt-4o", api_key=OPENAI_API_KEY)
 prompt_template =ChatPromptTemplate.from_messages(
     [
         ("system" ,"You are a Agile Coach.Answer any question related to the agile process")
-        ,("human" ,"{input}")
     ]
 )
 st.title("Agile Guide")
