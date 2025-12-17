@@ -51,7 +51,7 @@ retriever = get_retriever()
 # Use the same logic for the LLM as you did for Embeddings
 if os.getenv("STREAMLIT_CLOUD") == "true":
     from langchain_openai import ChatOpenAI
-    llm = ChatOpenAI(api_key=os.getenv("OPEN_API_KEY"), model="gpt-3.5-turbo")
+    llm = ChatOpenAI(api_key=st.secrets("OPEN_API_KEY"), model="gpt-3.5-turbo")
 else:
     from langchain_ollama import ChatOllama
     llm = ChatOllama(model="llama3")
