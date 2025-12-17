@@ -28,7 +28,10 @@ def get_retriever():
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=10)
     chunks = text_splitter.split_documents(document)
 
-    embeddings  = OllamaEmbeddings(model="nomic-embed-text")
+    if os.getenv("STREAMLIT_CLOUD"):
+        embeddings = OpenAIEmbeddings()
+    else:
+        embeddings = OllamaEmbeddings(model="nomic-embed-text")
     # This stays in memory and won't re-run unless the script changes
     vector_store = FAISS.from_documents(chunks, embeddings)
 
