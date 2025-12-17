@@ -48,7 +48,21 @@ def get_retriever():
 retriever = get_retriever()
 
 # 3. Chain Setup
-llm = ChatOllama(model="llama3", temperature=0)
+if os.getenv("STREAMLIT_CLOUD") == "true":
+    # Use OpenAI when running on Streamlit Cloud
+    from langchain_openai import ChatOpenAI
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+else:
+    # Use Ollama when running locally
+    from langchain_ollama import ChatOllama
+    llm = ChatOllama(model="llama3", temperature=0)
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system",
+     "You are an assistant for answering questions using the provided context. If the answer is not in the context, say you don't know. Answer in at most three concise sentences.\n\nContext:\n{context}"),
+    MessagesPlaceholder(variable_name="chat_history"),
+    ("human", "{input}")
+])
 
 prompt = ChatPromptTemplate.from_messages([
     ("system",
