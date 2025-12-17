@@ -48,14 +48,13 @@ def get_retriever():
 retriever = get_retriever()
 
 # 3. Chain Setup
+# Use the same logic for the LLM as you did for Embeddings
 if os.getenv("STREAMLIT_CLOUD") == "true":
-    # Use OpenAI when running on Streamlit Cloud
     from langchain_openai import ChatOpenAI
-    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+    llm = ChatOpenAI(api_key=os.getenv("OPEN_API_KEY"), model="gpt-3.5-turbo")
 else:
-    # Use Ollama when running locally
     from langchain_ollama import ChatOllama
-    llm = ChatOllama(model="llama3", temperature=0)
+    llm = ChatOllama(model="llama3")
 
 prompt = ChatPromptTemplate.from_messages([
     ("system",
