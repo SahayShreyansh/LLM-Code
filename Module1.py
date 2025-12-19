@@ -7,10 +7,17 @@ from langchain.agents import create_agent
 from tavily import TavilyClient
 
 # ----------------------------
-# Verify required environment variables
+# Load .env locally if it exists
+# ----------------------------
+from dotenv import load_dotenv
+
+# Only load .env if environment variables are not already set
+load_dotenv(override=False)
+
+# ----------------------------
+# Get required environment variables
 # ----------------------------
 openai_key = os.environ.get("OPENAI_API_KEY")
-print(openai_key)
 tavily_key = os.environ.get("TAVILY_API_KEY")
 
 if not openai_key:
