@@ -1,21 +1,33 @@
-from langchain.agents import create_agent
+import os
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
-from typing import Dict,Any
-from tavily import TavilyClient
-import os
+from langgraph.prebuilt import create_react_agent
 
-Open_AI_Key = os.getenv("OPEN_API_KEY")
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+# 1. Load the keys from the .env file
+load_dotenv()
 
+# 2. Initialize the model (it will automatically look for OPENAI_API_KEY in env)
+llm = ChatOpenAI(model="gpt-4o")
 
 @tool
-def web_search(query:str) ->Dict[str, any]:
-    "Search the web for information"
+def web_search(query: str):
+    """Search the web for information using Tavily."""
+    # This automatically uses TAVILY_API_KEY from your .env
+    from tavily import TavilyClient
+    tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
     return tavily.search(query=query)
-web_search.invoke("What is the capital of Burkina Faso?")
 
-model = create_agent(model="gpt-5-nano",tools=[web_search])
+# 3. Create the agent
+tools = [web_search]
+agent_executor = create_react_agent(llm, tools)
 
-response = model.invoke({ "messages": [HumanMessage(content="What is the capital of Burkina Faso?")]})
-print(response["messages"][-1].content)
+# 4. Run a query
+question = "Who has won world cup cricket most number of times?"
+try:
+    response = agent_executor.invoke({"messages": [HumanMessage(content=question)]})
+    # The last message in the list is the AI's final answer
+    print(response['messages'][-1].content)
+except Exception as e:
+    print(f"Authentication Error: {e}. Check if your NEW API keys are set in .env")
