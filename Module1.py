@@ -5,7 +5,7 @@ from typing import Dict,Any
 from tavily import TavilyClient
 import os
 
-Open_AI_Key = os.getenv("OPEN_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 
 
