@@ -1,13 +1,17 @@
 import os
-from langchain_openai import ChatOpenAI # Modern import
+from dotenv import load_dotenv  # 1. Import the loader
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from typing import Dict, Any
 from tavily import TavilyClient
 from langchain.agents import create_agent
 
+# 2. Load the .env file (this makes os.getenv work)
+load_dotenv()
+
 openai_api_key = os.getenv("OPENAI_API_KEY")
-print(openai_api_key)
+#print(openai_api_key)
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 llm = ChatOpenAI(
     model="gpt-4o-mini",
