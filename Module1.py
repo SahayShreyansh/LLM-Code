@@ -23,10 +23,6 @@ tavily_key = os.environ.get("TAVILY_API_KEY")
 print("OPENAI_API_KEY present:", os.environ.get("OPENAI_API_KEY") is not None)
 print("TAVILY_API_KEY present:", os.environ.get("TAVILY_API_KEY") is not None)
 
-if not openai_key:
-    raise ValueError("OPENAI_API_KEY is missing!")
-if not tavily_key:
-    raise ValueError("TAVILY_API_KEY is missing!")
 
 # Set the environment variable explicitly for OpenAI client
 os.environ["OPENAI_API_KEY"] = openai_key
