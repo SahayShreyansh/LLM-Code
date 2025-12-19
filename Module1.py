@@ -22,20 +22,20 @@ load_dotenv(override=False)
 tavily_key = os.environ.get("TAVILY_API_KEY")
 
 # Set the environment variable explicitly for OpenAI client
-openai_key = os.getenv("OPENAI_API_KEY")
-if openai_key:
-    os.environ["OPENAI_API_KEY"] = openai_key
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if OPENAI_API_KEY:
+    os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
-if not openai_key or openai_key.strip() == "":
+if not OPENAI_API_KEY or OPENAI_API_KEY.strip() == "":
     raise ValueError("OPENAI_API_KEY is missing or empty in environment/secrets!")
 
 if not tavily_key or tavily_key.strip() == "":
     raise ValueError("TAVILY_API_KEY is missing or empty in environment/secrets!")
 
 # Set it (helps some libraries)
-os.environ["OPENAI_API_KEY"] = openai_key.strip()
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY.strip()
 
-print(f"OPENAI_API_KEY loaded: {bool(openai_key)} (length: {len(openai_key)})")
+print(f"OPENAI_API_KEY loaded: {bool(OPENAI_API_KEY)} (length: {len(OPENAI_API_KEY)})")
 print(f"TAVILY_API_KEY loaded: {bool(tavily_key)} (length: {len(tavily_key)})")
 
 # ----------------------------
@@ -45,7 +45,7 @@ tavily = TavilyClient(api_key=tavily_key)
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
-    api_key=openai_key  # ← Use 'api_key', not 'openai_api_key' (correct parameter name)
+    api_key=OPENAI_API_KEY  # ← Use 'api_key', not 'openai_api_key' (correct parameter name)
 )
 
 # ----------------------------
