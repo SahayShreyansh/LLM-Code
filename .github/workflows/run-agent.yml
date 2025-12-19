@@ -2,7 +2,9 @@ name: Run LangChain Agent
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+    - main
+    - feature-code-dev
   workflow_dispatch:
 
 jobs:
