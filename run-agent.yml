@@ -35,7 +35,7 @@ jobs:
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
 
       # 5️⃣ Run Python script with secrets
-      - name: Run Python Agent
+      - name: Run  Agent
         run: python Module1.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
