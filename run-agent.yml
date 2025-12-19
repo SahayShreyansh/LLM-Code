@@ -1,0 +1,32 @@
+name: Run LangChain Agent
+
+on:
+  push:
+    branches:
+    - main
+    - feature-code-dev
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run agent
+        env:
+          OPEN_API_KEY: ${{ secrets.OPEN_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: |
+          python Module1.py
