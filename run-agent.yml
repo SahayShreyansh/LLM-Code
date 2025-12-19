@@ -25,7 +25,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # 4️⃣ Optional: verify secrets are available
+      # 4️⃣ Inject secrets as env variables
+      - name: Set API keys
+        run: echo "Secrets injected"
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+      # 5️⃣ Debug: verify secrets are available (optional)
       - name: Verify secrets
         run: |
           echo "OPENAI_API_KEY is set: ${OPENAI_API_KEY:+Yes}"
@@ -34,7 +41,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
 
-      # 5️⃣ Run the Python script with secrets
+      # 6️⃣ Run your Python script with secrets
       - name: Run Python Agent
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
