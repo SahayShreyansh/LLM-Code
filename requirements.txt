@@ -4,4 +4,9 @@ langchain-ollama
 langchain-openai
 langchain-core
 langchain-text-splitters
+langchain-mcp-adapters
+wikipedia
+duckduckgo-search
+langraph
 faiss-cpu
+tavily
