@@ -15,7 +15,7 @@ def web_search(query:str) ->Dict[str, any]:
     return tavily.search(query=query)
 web_search.invoke("What is the capital of Burkina Faso?")
 
-model = create_agent(model="gpt-5-nano",tools=[web_search])
+model = create_agent(model="gpt-4o-mini",tools=[web_search])
 
 response = model.invoke({ "messages": [HumanMessage(content="What is the capital of Burkina Faso?")]})
 print(response["messages"][-1].content)
