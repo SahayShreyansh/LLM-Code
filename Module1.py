@@ -8,7 +8,7 @@ from tavily import TavilyClient
 from langchain.agents import create_agent
 
 # 2. Load the .env file (this makes os.getenv work)
-load_dotenv(dotenv_path=".env", override=True)
+load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 #print(openai_api_key)
