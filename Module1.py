@@ -7,11 +7,7 @@ from typing import Dict, Any
 from tavily import TavilyClient
 from langchain.agents import create_agent
 
-# 2. Load the .env file (this makes os.getenv work)
-load_dotenv()
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-#print(openai_api_key)
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 llm = ChatOpenAI(
     model="gpt-4o-mini",
