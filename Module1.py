@@ -1,4 +1,5 @@
 from langchain.agents import create_agent
+from langchain_community.chat_models import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
 from typing import Dict,Any
@@ -7,6 +8,10 @@ import os
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    api_key=OPENAI_API_KEY # Explicitly pass the key here
+)
 
 
 @tool
@@ -15,7 +20,7 @@ def web_search(query:str) ->Dict[str, any]:
     return tavily.search(query=query)
 web_search.invoke("What is the capital of Burkina Faso?")
 
-model = create_agent(model="gpt-4o-mini",tools=[web_search])
+model = create_agent(model=llm,tools=[web_search])
 
 response = model.invoke({ "messages": [HumanMessage(content="What is the capital of Burkina Faso?")]})
 print(response["messages"][-1].content)
