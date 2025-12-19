@@ -6,11 +6,11 @@ from typing import Dict, Any
 from tavily import TavilyClient
 from langchain.agents import create_agent
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
+#openai_api_key = os.getenv("OPENAI_API_KEY")
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 llm = ChatOpenAI(
     model="gpt-4o-mini",
-    api_key=openai_api_key # Explicitly pass the key here
+    api_key=os.getenv("OPENAI_API_KEY") # Explicitly pass the key here
 )
 
 
