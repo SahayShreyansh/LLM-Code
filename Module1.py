@@ -12,6 +12,7 @@ from tavily import TavilyClient
 from dotenv import load_dotenv
 
 # Only load .env if environment variables are not already set
+from dotenv import load_dotenv
 load_dotenv(override=False)
 
 # ----------------------------
@@ -19,6 +20,17 @@ load_dotenv(override=False)
 # ----------------------------
 openai_key = os.environ.get("OPENAI_API_KEY")
 tavily_key = os.environ.get("TAVILY_API_KEY")
+
+if not openai_key:
+    raise ValueError("OPENAI_API_KEY is missing!")
+if not tavily_key:
+    raise ValueError("TAVILY_API_KEY is missing!")
+
+# Set the environment variable explicitly for OpenAI client
+os.environ["OPENAI_API_KEY"] = openai_key
+
+print("OPENAI_API_KEY exists and loaded.")
+print("TAVILY_API_KEY exists and loaded.")
 
 
 # ----------------------------
