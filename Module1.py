@@ -26,8 +26,6 @@ openai_key = os.getenv("OPENAI_API_KEY")
 if openai_key:
     os.environ["OPENAI_API_KEY"] = openai_key
 
-print("OPENAI_API_KEY exists and loaded.")
-print("TAVILY_API_KEY exists and loaded.")
 
 
 # ----------------------------
@@ -37,7 +35,7 @@ tavily = TavilyClient(api_key=tavily_key)
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
-    openai_api_key=openai_key  # explicitly pass the key
+    api_key=openai_key  # ← Use 'api_key', not 'openai_api_key' (correct parameter name)
 )
 
 # ----------------------------
