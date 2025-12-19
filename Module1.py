@@ -18,14 +18,13 @@ load_dotenv(override=False)
 # ----------------------------
 # Get required environment variables
 # ----------------------------
-openai_key = os.environ.get("OPENAI_API_KEY")
-tavily_key = os.environ.get("TAVILY_API_KEY")
-print("OPENAI_API_KEY present:", os.environ.get("OPENAI_API_KEY") is not None)
-print("TAVILY_API_KEY present:", os.environ.get("TAVILY_API_KEY") is not None)
 
+tavily_key = os.environ.get("TAVILY_API_KEY")
 
 # Set the environment variable explicitly for OpenAI client
-os.environ["OPENAI_API_KEY"] = openai_key
+openai_key = os.getenv("OPENAI_API_KEY")
+if openai_key:
+    os.environ["OPENAI_API_KEY"] = openai_key
 
 print("OPENAI_API_KEY exists and loaded.")
 print("TAVILY_API_KEY exists and loaded.")
