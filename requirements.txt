@@ -7,6 +7,6 @@ langchain-text-splitters
 langchain-mcp-adapters
 wikipedia
 duckduckgo-search
-langraph
+langgraph
 faiss-cpu
 tavily
