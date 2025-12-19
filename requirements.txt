@@ -10,3 +10,6 @@ duckduckgo-search
 langgraph
 faiss-cpu
 tavily
+
+
+
