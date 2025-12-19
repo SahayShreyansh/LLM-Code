@@ -8,10 +8,12 @@ from tavily import TavilyClient
 from langchain.agents import create_agent
 
 
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
-llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    )
+print("OPENAI_API_KEY exists:", bool(os.environ.get("OPENAI_API_KEY")))
+print("OPENAI_API_KEY length:", len(os.environ.get("OPENAI_API_KEY", "")))
+
+tavily = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 
 @tool
