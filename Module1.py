@@ -26,7 +26,17 @@ openai_key = os.getenv("OPENAI_API_KEY")
 if openai_key:
     os.environ["OPENAI_API_KEY"] = openai_key
 
+if not openai_key or openai_key.strip() == "":
+    raise ValueError("OPENAI_API_KEY is missing or empty in environment/secrets!")
 
+if not tavily_key or tavily_key.strip() == "":
+    raise ValueError("TAVILY_API_KEY is missing or empty in environment/secrets!")
+
+# Set it (helps some libraries)
+os.environ["OPENAI_API_KEY"] = openai_key.strip()
+
+print(f"OPENAI_API_KEY loaded: {bool(openai_key)} (length: {len(openai_key)})")
+print(f"TAVILY_API_KEY loaded: {bool(tavily_key)} (length: {len(tavily_key)})")
 
 # ----------------------------
 # Initialize clients
