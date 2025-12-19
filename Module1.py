@@ -21,10 +21,6 @@ openai_key = os.environ.get("OPENAI_API_KEY")
 tavily_key = os.environ.get("TAVILY_API_KEY")
 
 
-
-print("OPENAI_API_KEY exists and loaded.")
-print("TAVILY_API_KEY exists and loaded.")
-
 # ----------------------------
 # Initialize clients
 # ----------------------------
