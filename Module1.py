@@ -1,21 +1,66 @@
-from langchain.agents import create_agent
+import os
+from typing import Dict, Any
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
-from typing import Dict,Any
+from langchain.agents import create_agent
 from tavily import TavilyClient
-import os
 
-Open_AI_Key = os.getenv("OPEN_API_KEY")
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+# ----------------------------
+# Load .env locally if it exists
+# ----------------------------
+from dotenv import load_dotenv
+
+# Only load .env if environment variables are not already set
+from dotenv import load_dotenv
+load_dotenv(override=False)
+
+# ----------------------------
+# Get required environment variables
+# ----------------------------
+openai_key = os.environ.get("OPENAI_API_KEY")
+tavily_key = os.environ.get("TAVILY_API_KEY")
+print("OPENAI_API_KEY present:", os.environ.get("OPENAI_API_KEY") is not None)
+print("TAVILY_API_KEY present:", os.environ.get("TAVILY_API_KEY") is not None)
 
 
+# Set the environment variable explicitly for OpenAI client
+os.environ["OPENAI_API_KEY"] = openai_key
+
+print("OPENAI_API_KEY exists and loaded.")
+print("TAVILY_API_KEY exists and loaded.")
+
+
+# ----------------------------
+# Initialize clients
+# ----------------------------
+tavily = TavilyClient(api_key=tavily_key)
+
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    openai_api_key=openai_key  # explicitly pass the key
+)
+
+# ----------------------------
+# Define a tool for web search using Tavily
+# ----------------------------
 @tool
-def web_search(query:str) ->Dict[str, any]:
+def web_search(query: str) -> Dict[str, Any]:
     "Search the web for information"
     return tavily.search(query=query)
-web_search.invoke("What is the capital of Burkina Faso?")
 
-model = create_agent(model="gpt-5-nano",tools=[web_search])
+# Example of invoking the tool standalone
+result = web_search.invoke("What is the capital of Burkina Faso?")
+print("Web search result:", result)
 
-response = model.invoke({ "messages": [HumanMessage(content="What is the capital of Burkina Faso?")]})
-print(response["messages"][-1].content)
+# ----------------------------
+# Create an agent with the LLM and the tool
+# ----------------------------
+model = create_agent(model=llm, tools=[web_search])
+
+# Invoke the agent with a question
+response = model.invoke({
+    "messages": [HumanMessage(content="What is the capital of Burkina Faso?")]
+})
+
+print("Agent response:", response["messages"][-1].content)

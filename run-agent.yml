@@ -1,31 +1,43 @@
-name: Run LangChain Agent
+name: Run LLM Agent
 
 on:
   push:
-    branches: [main, feature-code-dev]
-  workflow_dispatch:
+    branches:
+      - main
+      - feature-code-dev
 
 jobs:
-  run:
+  run-agent:
     runs-on: ubuntu-latest
+
     steps:
+      # 1️⃣ Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
+      # 2️⃣ Set up Python
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.11" # Python 3.10+ is required for LangGraph
-          cache: 'pip'
+          python-version: '3.12'
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install --no-cache-dir -r requirements.txt
+        run: pip install -r requirements.txt
 
-      - name: Run agent
+      # 4️⃣ Optional: Debug that secrets are available
+      - name: Debug secrets
+        run: |
+          echo "OPENAI_API_KEY set: ${OPENAI_API_KEY:+Yes}"
+          echo "TAVILY_API_KEY set: ${TAVILY_API_KEY:+Yes}"
         env:
-          # This must be OPENAI_API_KEY for the library to detect it automatically
-          OPENAI_API_KEY: ${{ secrets.OPEN_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+      # 5️⃣ Run Python script with secrets
+      - name: Run Python Agent
         run: python Module1.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
