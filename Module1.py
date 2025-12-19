@@ -20,6 +20,8 @@ load_dotenv(override=False)
 # ----------------------------
 openai_key = os.environ.get("OPENAI_API_KEY")
 tavily_key = os.environ.get("TAVILY_API_KEY")
+print("OPENAI_API_KEY present:", os.environ.get("OPENAI_API_KEY") is not None)
+print("TAVILY_API_KEY present:", os.environ.get("TAVILY_API_KEY") is not None)
 
 if not openai_key:
     raise ValueError("OPENAI_API_KEY is missing!")
