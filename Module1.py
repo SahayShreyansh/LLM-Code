@@ -1,16 +1,16 @@
-from langchain.agents import create_agent
-from langchain_community.chat_models import ChatOpenAI
+import os
+from langchain_openai import ChatOpenAI # Modern import
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
-from typing import Dict,Any
+from typing import Dict, Any
 from tavily import TavilyClient
-import os
+from langchain.agents import create_agent
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
 llm = ChatOpenAI(
     model="gpt-4o-mini",
-    api_key=OPENAI_API_KEY # Explicitly pass the key here
+    api_key=openai_api_key # Explicitly pass the key here
 )
 
 
