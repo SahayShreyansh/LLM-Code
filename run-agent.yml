@@ -32,8 +32,11 @@ jobs:
           if [ -z "$OPENAI_API_KEY" ]; then echo "OPENAI_API_KEY is EMPTY"; else echo "OPENAI_API_KEY length is ${#OPENAI_API_KEY}"; fi
           if [ -z "$TAVILY_API_KEY" ]; then echo "TAVILY_API_KEY is EMPTY"; else echo "TAVILY_API_KEY length is ${#TAVILY_API_KEY}"; fi
 
-      - name: Run agent
+      - name: Run A
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
         run: python Module1.py
+
+
+
